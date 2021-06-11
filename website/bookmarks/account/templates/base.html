@@ -1,0 +1,63 @@
+{% load static %}
+<!doctype html>
+ <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="icon" type="image/png" href="{% static 'blog/logo.png' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-zrnmn8R8KkWl12rAZFt4yKjxplaDaT7/EUkKm7AovijfrQItFWR7O/JJn4DAa/gx" crossorigin="anonymous">
+        <title>BlogRoom</title>
+ </head>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <link href ="{%static 'css/base.css'%}" rel="stylesheet">
+
+</head>
+<body>
+  <div id=header">
+      {% if messages %}
+      <ul class = "messages">
+          {% for message in messages %}
+          <li class = "{{ message.tags }}">
+              {{message|safe}}
+              <a href="#" class="close">x</a>
+          </li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+    <span class="logo">Bookmarks </span>
+    {%if request.user.is_authenticated %}
+    <ul class = "menu" >
+        <li
+           {% if section = "dashboard" % } class = "selected" {% endif% } >
+           <a href = 'dashboard.html'>MY Dashboard</a>
+        </li>
+        <li {% if section = "image" % } class = "selected" {% endif% } >
+           <a href = "#">Images</a>
+        </li>
+        <li {% if section = "people" % } class = "selected" {% endif% } >
+           <a href = "#">People</a>
+
+       </li>
+    </ul>
+    {% endif %}
+      <span class = "user">
+          {%if request.user.is_authenticated %}
+          Hello{{request.user.first_name}}
+          <a href="{% url 'logout' %}">Logout</a>
+          {% else %}
+          <a href="{% url 'login' %}">Log-In</a>
+          {% endif %}
+      </span>
+
+  </div>
+  <div id="content">
+      {% block content %}
+      {% endblock %}
+  </div>
+</body>
+</html>
